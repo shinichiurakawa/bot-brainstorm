@@ -2,6 +2,7 @@ package jp.co.bot.api.botbrainstorm.controllers;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jp.co.bot.api.botbrainstorm.config.ConnectionCert;
 import jp.co.bot.api.botbrainstorm.dto.PostIdeaDto;
 import jp.co.bot.api.botbrainstorm.dto.ResponseDto;
 import jp.co.bot.api.botbrainstorm.dto.ResponseSearchResultDto;
@@ -21,17 +22,23 @@ public class BrainstormController {
     @Autowired
     BotBrainstormService brainstormService;
 
+    @Autowired
+    ConnectionCert connectionCert;
+
     @PostMapping("/searchIdea")
     public String searchIdea(@RequestBody SearchIdeaDto searchIdeaDto) {
         logger.info("[IN] BrainstormController.searchIdea()");
         ObjectMapper mapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.ALWAYS);
         String response_json = "";
+        if (!connectionCert.check(searchIdeaDto.getId(),searchIdeaDto.getKey())) {
+            return "unauthorized connection detected.";
+        }
         try {
             searchIdeaDto.urlDecode();
             logger.info("[--] BrainstormController.searchIdea searchIdeaDto = " + searchIdeaDto.logString());
 
             ResponseSearchResultDto responseDto = brainstormService.searchIdea(searchIdeaDto);
-            responseDto.urlEncode();
+            //responseDto.urlEncode();
             //response_json = mapper.writeValueAsString(responseDto);
             response_json = responseDto.createJson();
         } catch (Exception e) {
@@ -46,6 +53,9 @@ public class BrainstormController {
         logger.info("[IN] BrainstormController.postIdea()");
         ObjectMapper mapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.ALWAYS);
         String response_json = "";
+        if (!connectionCert.check(postIdeaDto.getId(),postIdeaDto.getKey())) {
+            return "unauthorized connection detected.";
+        }
         try {
             postIdeaDto.urlDecode();
             logger.info("[--] BrainstormController.searchIdea searchIdeaDto = " + postIdeaDto.logString());

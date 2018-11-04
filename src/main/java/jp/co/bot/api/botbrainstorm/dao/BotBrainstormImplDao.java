@@ -30,7 +30,8 @@ public class BotBrainstormImplDao implements BotBrainstormDao {
                 " (user_id" +
                 " ,idea_text" +
                 " ,valuation) " +
-                "VALUE " +
+//                "VALUE " +
+                "VALUES " +
                 " (:user_id" +
                 " ,:idea_text" +
                 " ,0) ";
@@ -40,7 +41,6 @@ public class BotBrainstormImplDao implements BotBrainstormDao {
     private String searchIdeaSql() {
         String sql = "SELECT user_id, idea_text, valuation FROM idea " +
                 " WHERE idea_text LIKE :keyword AND user_id = :user_id ORDER BY valuation LIMIT 15";
-//        " WHERE idea_text LIKE :keyword AND user_id = :user_id ORDER BY valuation LIMIT 15" ;
         return sql;
     }
 

@@ -6,11 +6,13 @@ public class ResponseSearchResultDto {
 	private String status;
 	private List<IdeaDto> result;
 
+	/*
 	public void urlEncode() {
 		result.stream().forEach(idea->{
 			idea.urlEncode();
 		});
 	}
+	*/
 
 	public String createJson() {
 		StringBuilder ret = new StringBuilder();

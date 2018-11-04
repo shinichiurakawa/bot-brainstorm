@@ -18,6 +18,7 @@ public class IdeaDto {
 		return String.join(",",item_list);
 	}
 
+	/*
 	public void urlEncode() {
 		URLCodec codec = new URLCodec("UTF-8");
 		try {
@@ -26,6 +27,7 @@ public class IdeaDto {
 			System.out.println("Exception at IdeaDto.urlEncode. e = " + e.getMessage());
 		}
 	}
+	*/
 
 	public String getUserId() {
 		return userId;
